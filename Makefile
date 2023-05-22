@@ -21,12 +21,12 @@ LD     := g++
 AR     := ar rc
 RANLIB := ranlib
 
-DEBUG_CFLAGS     := -Wall -Wno-format -g -DDEBUG
-RELEASE_CFLAGS   := -Wall -Wno-unknown-pragmas -Wno-format -O3
+DEBUG_CFLAGS     := -std=gnu++23 -Wall -Wno-format -g -DDEBUG -Og
+RELEASE_CFLAGS   := -std=gnu++23 -Wall -Wno-unknown-pragmas -Wno-format -Ofast
 
 LIBS		 :=
 
-DEBUG_CXXFLAGS   := ${DEBUG_CFLAGS} 
+DEBUG_CXXFLAGS   := ${DEBUG_CFLAGS}
 RELEASE_CXXFLAGS := ${RELEASE_CFLAGS}
 
 DEBUG_LDFLAGS    := -g
@@ -43,8 +43,8 @@ else
 endif
 
 ifeq (YES, ${PROFILE})
-   CFLAGS   := ${CFLAGS} -pg -O3
-   CXXFLAGS := ${CXXFLAGS} -pg -O3
+   CFLAGS   := ${CFLAGS} -pg -Ofast
+   CXXFLAGS := ${CXXFLAGS} -pg -Ofast
    LDFLAGS  := ${LDFLAGS} -pg
 endif
 
