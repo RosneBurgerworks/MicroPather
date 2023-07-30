@@ -208,7 +208,7 @@ private:
     Graph* graph;
 };
 
-PathNodePool::PathNodePool(unsigned _allocate, unsigned _typicalAdjacent)
+PathNodePool::PathNodePool(unsigned int _allocate, unsigned int _typicalAdjacent)
     : firstBlock(nullptr),
       blocks(nullptr),
 #ifdef MICROPATHER_STRESS
@@ -321,7 +321,7 @@ PathNodePool::Block* PathNodePool::NewBlock()
     return block;
 }
 
-unsigned PathNodePool::Hash(void* voidval)
+unsigned int PathNodePool::Hash(void* voidval)
 {
     /*
         Spent quite some time on this, and the result isn't quite satisfactory. The
@@ -369,7 +369,7 @@ unsigned PathNodePool::Hash(void* voidval)
     // The HashMask() is used as the divisor. h%1024 has lots of common
     // repetitions, but h%1023 will move things out more.
     auto h = reinterpret_cast<MP_UPTR>(voidval);
-    return h % HashMask();
+    return h & HashMask();
 }
 
 PathNode* PathNodePool::Alloc()
@@ -681,7 +681,7 @@ void MicroPather::StatesInPool(MP_VECTOR<void*>* stateVec)
     pathNodePool.AllStates(frame, stateVec);
 }
 
-void PathNodePool::AllStates(unsigned frame, MP_VECTOR<void*>* stateVec)
+void PathNodePool::AllStates(unsigned int frame, MP_VECTOR<void*>* stateVec)
 {
     for (Block* b = blocks; b; b = b->nextBlock)
         for (unsigned int i = 0; i < allocate; ++i)
@@ -1049,8 +1049,8 @@ int MicroPather::SolveForNearStates(void* startState, MP_VECTOR<StateCost>* near
         }
     }
 #ifdef DEBUG
-    for (unsigned i = 0; i < near->size(); ++i)
-        for (unsigned k = i + 1; k < near->size(); ++k)
+    for (unsigned int i = 0; i < near->size(); ++i)
+        for (unsigned int k = i + 1; k < near->size(); ++k)
             MPASSERT((*near)[i].state != (*near)[k].state)
 #endif
 

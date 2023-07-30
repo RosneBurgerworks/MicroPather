@@ -342,8 +342,9 @@ namespace micropather
 
         [[nodiscard]] unsigned int HashMask() const
         {
-            return ((1 << hashShift) - 1);
+            return (1 << hashShift) - 1;
         }
+
         void AddPathNode(unsigned int key, PathNode* p);
         Block* NewBlock();
         PathNode* Alloc();
